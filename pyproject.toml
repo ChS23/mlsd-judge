@@ -1,0 +1,67 @@
+[project]
+name = "mlsd-judge"
+version = "0.1.0"
+description = "Проверка студенческих работ LLM-агентом: оценка качества и цикл улучшения"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/judge"]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4",
+    "ruff>=0.15.7",
+    "ty>=0.0.24",
+]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 88
+extend-include = ["*.ipynb"]
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes
+    "I",      # isort
+    "UP",     # pyupgrade — modern python syntax
+    "B",      # flake8-bugbear — common bugs
+    "ASYNC",  # flake8-async — async antipatterns
+    "S",      # flake8-bandit — security
+    "C4",     # flake8-comprehensions
+    "SIM",    # flake8-simplify
+    "RET",    # flake8-return
+    "ARG",    # flake8-unused-arguments
+    "TC",     # flake8-type-checking — move imports behind TYPE_CHECKING
+    "RUF",    # ruff-specific rules
+]
+ignore = [
+    "RET504", # unnecessary assignment before return
+    "B008",   # function call in default arg — common in DI
+    "RUF001", # ambiguous unicode — prompts are in Russian
+    "RUF002", # ambiguous unicode in docstrings — texts are in Russian
+    "RUF003", # ambiguous unicode in comments — comments are in Russian
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S", "ARG", "TC001"]
+# В ноутбуках EDA длинные строки и вывод без аннотаций — норма
+"notebooks/**" = ["E501", "B018"]
+
+[tool.ruff.format]
+quote-style = "double"
+docstring-code-format = true
+
+[tool.ty.environment]
+python-version = "3.13"
+python = ".venv"
+
+[tool.ty.src]
+exclude = [".venv/"]
