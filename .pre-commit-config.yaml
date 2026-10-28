@@ -37,7 +37,7 @@ repos:
         args: [--fix]
       - id: ruff-format
 
-  # Проверка типов — из окружения проекта, чтобы видеть его зависимости
+  # Типы проверяем в окружении проекта, чтобы ty видел его зависимости
   - repo: local
     hooks:
       - id: ty
@@ -47,7 +47,7 @@ repos:
         types: [python]
         pass_filenames: false
 
-  # Сообщения коммитов — Conventional Commits
+  # Сообщения коммитов по Conventional Commits
   - repo: https://github.com/compilerla/conventional-pre-commit
     rev: v4.4.0
     hooks:

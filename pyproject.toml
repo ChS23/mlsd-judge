@@ -31,28 +31,28 @@ select = [
     "W",      # pycodestyle warnings
     "F",      # pyflakes
     "I",      # isort
-    "UP",     # pyupgrade — modern python syntax
-    "B",      # flake8-bugbear — common bugs
-    "ASYNC",  # flake8-async — async antipatterns
-    "S",      # flake8-bandit — security
+    "UP",     # pyupgrade: modern python syntax
+    "B",      # flake8-bugbear: common bugs
+    "ASYNC",  # flake8-async: async antipatterns
+    "S",      # flake8-bandit: security
     "C4",     # flake8-comprehensions
     "SIM",    # flake8-simplify
     "RET",    # flake8-return
     "ARG",    # flake8-unused-arguments
-    "TC",     # flake8-type-checking — move imports behind TYPE_CHECKING
+    "TC",     # flake8-type-checking: move imports behind TYPE_CHECKING
     "RUF",    # ruff-specific rules
 ]
 ignore = [
     "RET504", # unnecessary assignment before return
-    "B008",   # function call in default arg — common in DI
-    "RUF001", # ambiguous unicode — prompts are in Russian
-    "RUF002", # ambiguous unicode in docstrings — texts are in Russian
-    "RUF003", # ambiguous unicode in comments — comments are in Russian
+    "B008",   # function call in default arg: common in DI
+    "RUF001", # ambiguous unicode: prompts are in Russian
+    "RUF002", # ambiguous unicode in docstrings: texts are in Russian
+    "RUF003", # ambiguous unicode in comments: comments are in Russian
 ]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**" = ["S", "ARG", "TC001"]
-# В ноутбуках EDA длинные строки и вывод без аннотаций — норма
+# В ноутбуках EDA длинные строки и вывод без аннотаций допустимы
 "notebooks/**" = ["E501", "B018"]
 
 [tool.ruff.format]
