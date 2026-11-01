@@ -19,6 +19,12 @@ dev = [
     "ruff>=0.15.7",
     "ty>=0.0.24",
 ]
+eda = [
+    "ipykernel>=7.4.0",
+    "matplotlib>=3.11.2",
+    "nbconvert>=7.17.2",
+    "pandas>=3.1.0",
+]
 
 [tool.ruff]
 target-version = "py313"
@@ -64,4 +70,5 @@ python-version = "3.13"
 python = ".venv"
 
 [tool.ty.src]
-exclude = [".venv/"]
+# Ноутбуки исследовательские, их проверяет ruff
+exclude = [".venv/", "notebooks/"]
