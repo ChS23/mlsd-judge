@@ -1,0 +1,27 @@
+{
+ "runs_failed": 7,
+ "teams": 31,
+ "verdicts_per_team": {
+  "min": 6,
+  "median": 42.0,
+  "max": 138
+ },
+ "runs": 116,
+ "runs_done": 116,
+ "verdicts": 1410,
+ "minutes": {
+  "median": 9.9,
+  "p95": 23.5,
+  "max": 97.31
+ },
+ "tokens_per_run": {
+  "median": 738521.5,
+  "p95": 1405978.0
+ },
+ "cache_share": 0.8,
+ "unsure_unanimous": 9,
+ "criteria_checked_twice": 278,
+ "criteria_changed_share": 0.281,
+ "reviews": 59,
+ "review_minutes_median": 1.0
+}
