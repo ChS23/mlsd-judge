@@ -1,0 +1,56 @@
+# Установка: uv run pre-commit install
+# Прогон по всему репозиторию: uv run pre-commit run --all-files
+default_install_hook_types: [pre-commit, commit-msg]
+default_stages: [pre-commit]
+
+repos:
+  # Гигиена файлов
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: [--maxkb=1024]
+      - id: detect-private-key
+
+  # Репозиторий публичный: секреты не должны попасть в историю
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.0
+    hooks:
+      - id: gitleaks
+
+  # uv.lock совпадает с pyproject.toml
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.13.1
+    hooks:
+      - id: uv-lock
+
+  # Линтер и форматер
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.1
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
+
+  # Типы проверяем в окружении проекта, чтобы ty видел его зависимости
+  - repo: local
+    hooks:
+      - id: ty
+        name: ty
+        entry: uv run --frozen ty check
+        language: system
+        types: [python]
+        pass_filenames: false
+
+  # Сообщения коммитов по Conventional Commits
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v4.4.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+        args: [feat, fix, docs, refactor, test, perf, build, ci, chore, revert]

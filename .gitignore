@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# uv
+.venv/
+
+# Кэши инструментов
+.ruff_cache/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Окружение и секреты
+.env
+.env.*
+!.env.example
+*.pem
+
+# Сырые данные сдач не выходят из закрытого хранилища,
+# в репозиторий попадают только обезличенные выгрузки
+data/raw/
+
+# IDE и ОС
+.idea/
+.vscode/
+*.swp
+.DS_Store
