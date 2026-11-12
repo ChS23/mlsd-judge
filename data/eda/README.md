@@ -15,6 +15,7 @@
 | `c3_runs_by_week.csv` | неделя практики | `week`, `trigger`, `status`, `count` |
 | `c3_minutes_hist.csv` | интервал в 2 минуты | `from_minute`, `count` |
 | `c3_summary.json` | итоговые числа практики | команды, прогоны, квантили времени и токенов, доля кэша, стабильность, приёмки |
+| `split.csv` | команда 4 курса | `course`, `team`, `part`: `work` для правок, `holdout` отложена; практика отложена целиком |
 | `questions_summary.csv` | сочетание значений | `course`, `source`, `mark`, `dispute`, `verdict_state`, `count` |
 | `rechecks_summary.csv` | вид запроса | `course`, `kind`, `count` |
 

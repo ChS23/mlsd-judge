@@ -25,6 +25,7 @@ COURSES = {"stream-5": "c4", "practice-2026-3-1": "c3"}
 # Практику публикуем только сводками: её репозитории закрытые
 ROWS = {"c4"}
 MINUTE_BIN = 2
+HOLDOUT_TEAMS = 2
 FORBIDDEN = [
     re.compile(r"[0-9a-f]{8}-[0-9a-f]{4}-"),  # UUID платформы
     re.compile(r"\b[0-9a-f]{12,}\b"),  # полный хеш коммита
@@ -57,6 +58,18 @@ def team_names(salt: bytes, teams: set[str]) -> dict[str, str]:
     # Порядок по соли: номер команды не выдаёт порядок записи на поток
     ordered = sorted(teams, key=lambda t: tag(salt, t))
     return {team: f"T{i:02d}" for i, team in enumerate(ordered, 1)}
+
+
+def split_rows(salt: bytes, teams: list[str]) -> list[dict[str, str]]:
+    """Отложенные команды выбираются солью, а не руками: так их не подгонишь."""
+    ordered = sorted(teams, key=lambda t: tag(salt, "split:" + t))
+    held = set(ordered[:HOLDOUT_TEAMS])
+    rows = [
+        {"course": "c4", "team": t, "part": "holdout" if t in held else "work"}
+        for t in sorted(teams)
+    ]
+    # практика целиком отложенный курс, команды по ней не публикуем
+    return [*rows, {"course": "c3", "team": "all", "part": "holdout"}]
 
 
 def work_of(criterion_key: str) -> str:
@@ -296,6 +309,10 @@ def main() -> None:
     write(args.out, "verdicts.csv", [v for v in verdicts if v["course"] in ROWS])
     write(args.out, "runs.csv", [r for r in runs if r["course"] in ROWS])
     write(args.out, "reviews.csv", [r for r in reviews if r["course"] in ROWS])
+    c4_teams = sorted(
+        {v["team"] for v in verdicts if v["course"] == "c4" and v["team"]}
+    )
+    write(args.out, "split.csv", split_rows(salt, c4_teams))
     for code in sorted(set(COURSES.values()) - ROWS):
         new_runs = {
             r["run"] for r in runs if r["course"] == code and r["agent"] == "0.1.0"
