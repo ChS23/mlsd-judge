@@ -48,14 +48,14 @@ uv sync
 uv run pre-commit install
 ```
 
-Проверки:
+Проверки и повтор EDA:
 
 ```bash
-uv run ruff check .
-uv run ruff format .
-uv run ty check
-uv run pre-commit run --all-files
+make check   # все хуки pre-commit
+make eda     # заново выполняет notebooks/eda.ipynb на data/eda
 ```
+
+То же самое запускается на GitHub для каждого PR.
 
 Перед каждым коммитом pre-commit проверяет форматирование файлов, ищет
 секреты (`gitleaks`), сверяет `uv.lock` с `pyproject.toml`, запускает
@@ -65,7 +65,11 @@ ruff и ty и проверяет, что сообщение коммита на�
 ## Структура
 
     src/judge/       код судьи
-    docs/            дизайн-документ
+    docs/            дизайн-документ и протокол разметки
+    scripts/         сборка пакета для слепой разметки и обезличивание
+    notebooks/       EDA, запуск: uv sync --group eda
+    reports/         отчёт EDA с графиками
+    data/eda/        обезличенные таблицы
     pyproject.toml   зависимости и настройки ruff и ty
 
 ## Домашние работы
